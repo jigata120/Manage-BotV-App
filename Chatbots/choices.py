@@ -1,0 +1,25 @@
+from django.db import models
+class LanguageChoices(models.TextChoices):
+    ENGLISH = 'EN', 'English'
+    SPANISH = 'ES', 'Spanish'
+    MANDARIN = 'ZH', 'Mandarin'
+    HINDI = 'HI', 'Hindi'
+    ARABIC = 'AR', 'Arabic'
+    BENGALI = 'BN', 'Bengali'
+    PORTUGUESE = 'PT', 'Portuguese'
+    RUSSIAN = 'RU', 'Russian'
+    JAPANESE = 'JA', 'Japanese'
+    GERMAN = 'DE', 'German'
+    BULGARIAN = 'BG', 'Bulgarian'
+
+class PersonalityChoices(models.TextChoices):
+    PROFESSIONAL = 'PROF', 'Professional'
+    FRIENDLY = 'FRI', 'Friendly'
+    FORMAL = 'FORM', 'Formal'
+    CASUAL = 'CAS', 'Casual'
+    ASSISTIVE = 'ASS', 'Assistive'
+    HUMOROUS = 'HUM', 'Humorous'
+    EMPATHETIC = 'EMP', 'Empathetic'
+    INFORMATIVE = 'INF', 'Informative'
+    ENGAGING = 'ENG', 'Engaging'
+    SARCASTIC = 'SAR', 'Sarcastic'
