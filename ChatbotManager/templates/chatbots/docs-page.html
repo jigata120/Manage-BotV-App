@@ -1,0 +1,139 @@
+{% extends  'base.html' %}
+
+
+{% block title %}
+Chatbot Integration Documentation
+{% endblock %}
+
+
+{% block style %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css" rel="stylesheet">
+{% load static %}
+<link href="{% static 'css/chatbots/docs-page.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block content %}
+<nav>
+    <div class="nav-content">
+        <a class="logo" href="#">ChatBot Docs</a>
+        <button class="menu-button">☰</button>
+        <div class="nav-links">
+            <a href="#introduction">Introduction</a>
+            <a href="#quick-start">Quick Start</a>
+            <a href="#configuration">Configuration</a>
+            <a href="#examples">Examples</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Chatbot Integration Documentation</h1>
+
+    <section id="introduction">
+        <h2>Introduction</h2>
+        <div class="card">
+            <p>Our chatbot provides seamless integration capabilities across various platforms, enhancing user
+                interaction and providing immediate support to your visitors. With simple implementation and extensive
+                customization options, you can quickly deploy an AI-powered chat solution that matches your brand's
+                identity.</p>
+        </div>
+    </section>
+
+    <section id="quick-start">
+        <h2>Quick Start Guide</h2>
+        <div class="card">
+            <h3>Script Integration</h3>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode()">Copy Code</button>
+                <pre><code>&lt;script src="http://127.0.0.1:8080/static/js/integration/embed-chatbot.js"
+        data-domain="http://127.0.0.1:8080"
+        data-width="100%"
+        data-height="100vh"
+        data-theme="dark"&gt;
+&lt;/script&gt;</code></pre>
+            </div>
+            <p>Place the script just before the closing &lt;/body&gt; tag for optimal performance.</p>
+        </div>
+    </section>
+
+    <section id="configuration">
+        <h2>Configuration Options</h2>
+        <div class="card">
+            <div class="parameter-table-wrapper">
+                <table class="parameter-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>data-domain</td>
+                        <td>Sets the domain for the chatbot</td>
+                        <td>data-domain="http://127.0.0.1:8080"</td>
+                    </tr>
+                    <tr>
+                        <td>data-width</td>
+                        <td>Controls the chatbot's width</td>
+                        <td>data-width="100%"</td>
+                    </tr>
+                    <tr>
+                        <td>data-height</td>
+                        <td>Controls the height of the chatbot window</td>
+                        <td>data-height="100vh"</td>
+                    </tr>
+                    <tr>
+                        <td>data-theme</td>
+                        <td>Sets the color theme</td>
+                        <td>data-theme="dark"</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="theme-previews">
+        <h2>Theme Previews</h2>
+        <div class="theme-preview">
+            <div class="preview-card">
+                <div class="preview-image">Dark Theme Preview</div>
+                <h3>Dark Theme</h3>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">Light Theme Preview</div>
+                <h3>Light Theme</h3>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples">
+        <h2>Examples</h2>
+        <div class="theme-preview">
+            <div class="preview-card">
+                <div class="preview-image">Example 1</div>
+                <h3>code</h3>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">Example 1</div>
+                <h3>result</h3>
+            </div>
+        </div>
+        <div class="theme-preview">
+            <div class="preview-card">
+                <div class="preview-image">Example 2</div>
+                <h3>code</h3>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">Example 2</div>
+                <h3>result</h3>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script src="{% static 'js/chatbots/docs-page.js' %}"></script>
+{% endblock %}
