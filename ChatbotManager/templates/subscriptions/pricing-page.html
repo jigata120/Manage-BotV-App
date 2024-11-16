@@ -1,0 +1,96 @@
+{% extends  'base.html' %}
+
+
+{% block title %}
+Pricing
+{% endblock %}
+
+
+{% block style %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+{% load static %}
+<link href="{% static 'css/subscriptions/pricing-page.css' %}" rel="stylesheet">
+
+
+{% endblock %}
+
+
+{% block content %}
+<section class="hero">
+    <h1>Find the Perfect Plan for Your Needs</h1>
+    <p>Enhance customer interaction, automate responses, and boost engagement with our advanced AI chatbot
+        solutions.</p>
+</section>
+
+<section class="pricing">
+    <div class="pricing-grid">
+        {% for plan in plans %}
+        <div class="price-card {% if plan.popular %}popular{% endif %}">
+            <h3>{{plan.plan_name}}</h3>
+            <div class="price">${{plan.price}}<span>/month</span></div>
+            <ul class="features">
+                {% for benefit in plan.benefits.all %}
+                <li><i class="fas fa-check"></i>{{benefit.fas}}</li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'purchase' plan.id%}">
+                <button class="cta-button">Select Plan</button>
+            </a>
+        </div>
+        {% endfor %}
+
+
+        <div class="price-card">
+            <h3>Enterprise</h3>
+            <div class="price">$199<span>/month</span></div>
+            <ul class="features">
+                <li><i class="fas fa-check"></i>Unlimited Interactions</li>
+                <li><i class="fas fa-check"></i>Full Customization</li>
+                <li><i class="fas fa-check"></i>24/7 Premium Support</li>
+                <li><i class="fas fa-check"></i>Custom Analytics</li>
+                <li><i class="fas fa-check"></i>AI-Powered Features</li>
+                <li><i class="fas fa-check"></i>Custom Integration</li>
+            </ul>
+            <button class="cta-button">Contact Sales</button>
+        </div>
+    </div>
+</section>
+
+<section class="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+        <div class="faq-question">
+            <span>Can I cancel anytime?</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+            Yes, you can cancel your subscription at any time. No long-term contracts required.
+        </div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">
+            <span>Is there a free trial?</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+            Yes, we offer a 14-day free trial for all our plans. No credit card required.
+        </div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">
+            <span>What happens if I exceed the monthly limit?</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+            If you exceed your monthly interaction limit, you'll be notified and can choose to upgrade your plan or
+            purchase additional interactions.
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+{% block script %}
+<script src="{% static 'js/subscriptions/pricing-page.js' %}"></script>
+{% endblock %}
