@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Complete Your Purchase - NeoTech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="{% static 'css/subscriptions/purchase-page.css' %}" rel="stylesheet">
+
+
+</head>
+<body>
+
+<header>
+    <h1>Complete Your Purchase</h1>
+    <p class="subtitle">Secure your plan in just a few steps</p>
+</header>
+
+<main>
+    <div class="purchase-container">
+        <div class="plan-summary">
+            <h2>Enterprise Plan</h2>
+            <p class="price">${{plan.price}}/month</p>
+            <ul class="feature-list">
+                {% for benefit in plan.benefits.all %}
+                <li>{{benefit.fas}}</li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'pricing' %}">
+                <button class="btn btn-secondary" id="changePlanBtn">Change Plan</button>
+            </a>
+        </div>
+
+        <div class="purchase-form">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input id="name" required type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input id="email" required type="email">
+            </div>
+
+            <div class="form-group">
+                <label for="card">Card Number</label>
+                <input id="card" placeholder="**** **** **** ****" required type="text">
+            </div>
+
+            <div class="payment-summary">
+                <div class="payment-row">
+                    <span>Subtotal</span>
+                    <span>${{plan.price}}.00</span>
+                </div>
+                <div class="payment-row">
+                    <span>Tax (10%)</span>
+                    {% load custom_filters %}
+                    <span>${{ plan.price|multiply:0.1 }}</span>
+
+                </div>
+                <div class="payment-row total">
+                    <span>Total</span>
+                    <span>${{plan.price|addTax:0.1}}</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <a href="{% url 'playground_page' %}">
+                    <button class="btn btn-secondary" id="playgroundBtn">Test Playground</button>
+
+                </a>
+
+                <!--                <button class="btn btn-secondary" id="backBtn">Go Back</button>-->
+                <form method="post">
+                    {% csrf_token%}
+                    <button class="btn btn-primary" id="purchaseBtn" type="submit">Complete Purchase</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p class="security-message">🔒 All transactions are secure and encrypted</p>
+    <a class="support-link" href="#">Need help? Contact Support</a>
+</footer>
+<script src="{% static 'js/subscriptions/purchase-page.js' %}"></script>
+
+</body>
+</html>
