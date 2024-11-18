@@ -51,6 +51,39 @@
         .logo span {
             color: var(--electric-blue);
         }
+        .form-group {
+    margin-bottom: 1rem;
+}
+
+.field-help {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+.debug-errors {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+}
+.debug-errors p {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 0.75rem 1.25rem;
+    margin-top: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.error {
+    margin-top: 0.25rem;
+}
+
+.non-field-errors {
+    margin-bottom: 1rem;
+}
+
 
         .form-group {
             margin-bottom: 1.5rem;
