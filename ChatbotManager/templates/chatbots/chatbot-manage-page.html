@@ -1,0 +1,291 @@
+{% extends  'base.html' %}
+{% load chatbots_custom_filters %}
+ {% load static %}
+
+{% block title %}
+Bot Management
+{% endblock %}
+
+
+{% block style %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<link href="{% static 'css/chatbots/chatbot-manage-page.css' %}?{% now 'U' %}" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+
+    <div class="page-header">
+        <h1 class="page-title">Bots Management</h1>
+        <button class="btn btn-primary" onclick="showNewBotModal()">
+            <i class="fas fa-plus"></i> Add New Bot
+        </button>
+    </div>
+
+    <div class="metrics-bar">
+
+        <div class="metric-card">
+            <div class="metric-value">{{bots_count}}</div>
+            <div class="metric-label">Active Bots</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">{{active_bots_count}}</div>
+            <div class="metric-label">Inactive Bots</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">{{total_interactions_today}}</div>
+            <div class="metric-label">Total Interactions Today</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">{{total_tokens_usage_today|format_to_k}}</div>
+            <div class="metric-label">Total Tokens Used Today</div>
+        </div>
+    </div>
+
+    <div class="filters-section">
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input placeholder="Search bots..." type="text">
+        </div>
+        <select class="filter-dropdown">
+            <option value="all">All Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+        </select>
+        <select class="filter-dropdown">
+            <option value="recent">Most Recent</option>
+            <option value="interactions">Most Interactions</option>
+            <option value="users">Most Users</option>
+        </select>
+    </div>
+
+    <div class="bot-grid">
+        <!-- Bot Card 1 -->
+        {% for bot in latest_bots %}
+             <div class="bot-card">
+            <div class="bot-header">
+                <div class="bot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="bot-info">
+                    <h3 class="bot-name">{{bot.name}}</h3>
+
+                 {% if bot.status %}
+
+                   <div class="bot-status">
+                        <span class="status-indicator status-active"></span>
+                        Active
+                    </div>
+                 {% else%}
+                     <div class="bot-status">
+                        <span class="status-indicator status-inactive"></span>
+                        Inactive
+                    </div>
+                 {% endif%}
+                    <a href="{% url 'chatbot_integration' bot.id%}">
+                    <button class="btn btn-integration" >
+                        <i class="fas fa-link"></i>Integrate
+                    </button>
+                    </a>
+                </div>
+            </div>
+            <div class="bot-stats">
+                <div class="stat-item">
+                    <div class="stat-value">{{bot.usage.interactions|format_to_k}}</div>
+                    <div class="stat-label">Interactions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{bot.usage.tokens_usage|format_to_k}}</div>
+                    <div class="stat-label">Tokens</div>
+                </div>
+            </div>
+            <div class="bot-actions">
+                <a href="{% url 'chatbot_edit_page' bot.id%}">
+                    <button class="btn btn-secondary" >
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                </a>
+                <a href="{% url 'chatbots_settings_page'   %}">
+                      <button class="btn btn-secondary" onclick="showSettingsModal(1)">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+                </a>
+
+                <a href="{% url 'chatbot_usage_page' bot.id%}">
+                    <button class="btn btn-usage" >
+                    <i class="fas fa-chart-simple"></i>Usage
+                </button>
+                </a>
+
+                     <button class="btn btn-danger" onclick="showDeleteModal('{{bot.id}}')">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+
+            </div>
+        </div>
+
+        {% empty %}
+
+        {% endfor %}
+
+        <!-- Bot Card 2 -->
+        <div class="bot-card">
+            <div class="bot-header">
+                <div class="bot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="bot-info">
+                    <h3 class="bot-name">Sales Bot</h3>
+                    <div class="bot-status">
+                        <span class="status-indicator status-inactive"></span>
+                        Inactive
+                    </div>
+                </div>
+            </div>
+            <div class="bot-stats">
+                <div class="stat-item">
+                    <div class="stat-value">1.8K</div>
+                    <div class="stat-label">Interactions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">289</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+            </div>
+            <div class="bot-actions">
+                <button class="btn btn-secondary" onclick="showEditModal(2)">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class="btn btn-secondary" onclick="showSettingsModal(2)">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+                <button class="btn btn-danger" onclick="showDeleteModal(2)">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+{% load static %}
+<div class="modal" id="newBotModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Add New Bot</h2>
+            <button class="close-modal" onclick="closeModal('newBotModal')">&times;</button>
+        </div>
+
+        <form class="form-container" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}"> Chatbot Name</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="error-message">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label>Status</label>
+                <div class="radio-group">
+                    {% for radio in form.status %}
+                    <label class="radio-item">
+                        {{ radio.choice_label }}
+                        {{ radio.tag }}
+                        <span class="radio-checkmark"></span>
+                    </label>
+                    {% endfor %}
+                </div>
+                {% if form.status.errors %}
+                    <div class="error-message">{{ form.status.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.description.id_for_label }}">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="error-message">{{ form.description.errors }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Bot</button>
+        </form>
+    </div>
+</div>
+
+
+    <div class="modal" id="deleteBotModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Delete Bot</h2>
+                <button class="close-modal" onclick="closeModal('deleteBotModal')">&times;</button>
+            </div>
+            <p>Are you sure you want to delete this bot? This action cannot be undone.</p>
+            <button  id="deleteBotButton" class="btn btn-danger" onclick="">Delete</button>
+            <button class="btn btn-secondary" onclick="closeModal('deleteBotModal')">Cancel</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script src="{% static 'js/chatbots/chatbot-manage-page.js' %}"></script>
+<script>
+    function showNewBotModal() {
+        document.getElementById('newBotModal').style.display = 'flex';
+    }
+
+
+function deleteBot(botId) {
+
+        fetch(`{% url 'chatbot_delete' 'fe769d35-b5ec-4fa3-be6d-6726b1616c32' %}`.replace('fe769d35-b5ec-4fa3-be6d-6726b1616c32', botId), {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert("Failed to delete bot.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again.");
+            });
+}
+
+let deleteButton = document.getElementById('deleteBotButton');
+
+function showDeleteModal(botId) {
+     document.getElementById('deleteBotModal').style.display = 'flex';
+    console.log('Opening delete modal for bot ID:', botId);
+
+     console.log('Current onclick attached:', deleteButton.onclick);
+
+     deleteButton.removeEventListener('click', handleDeleteClick);
+     deleteButton.addEventListener('click', handleDeleteClick);
+
+    function handleDeleteClick() {
+        console.log('Delete button clicked for bot ID:', botId);
+        deleteBot(botId);
+    }
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+</script>
+{% endblock %}
+
+
