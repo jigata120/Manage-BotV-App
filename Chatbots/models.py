@@ -9,27 +9,30 @@ from django.db.models import JSONField
 class Chatbot(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
+    image = models.URLField( blank=True, null=True)
     apikey = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     status = models.BooleanField(default=True)
     description = models.TextField()
     user = models.ForeignKey('Users.Profile', on_delete=models.CASCADE, related_name='rel_chatbots')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    settings = models.OneToOneField('Settings', on_delete=models.CASCADE, related_name='rel_chatbot_settings')
-    usage = models.OneToOneField('Usage', on_delete=models.CASCADE, related_name='rel_chatbot_usage')
+    settings = models.OneToOneField('Settings', on_delete=models.SET_NULL, related_name='rel_chatbot_settings',
+                                    null=True,blank=True)
+    usage = models.OneToOneField('Usage', on_delete=models.SET_NULL, related_name='rel_chatbot_usage',
+                                    null = True, blank = True)
 
     def __str__(self):
         return self.name
 
 
 class Usage(models.Model):
-    interactions = models.IntegerField()
+    interactions = models.IntegerField(default=0)
     daily_interactions = models.IntegerField(default=0)
     monthly_interactions = models.IntegerField(default=0)
-    tokens_usage = models.IntegerField()
+    tokens_usage = models.IntegerField(default=0)
     daily_tokens_usage = models.IntegerField(default=0)
     monthly_tokens_usage = models.IntegerField(default=0)
-    chatbot = models.OneToOneField(Chatbot, on_delete=models.CASCADE, related_name='rel_usage')
+    chatbot = models.OneToOneField(Chatbot, on_delete=models.CASCADE, related_name='rel_usage',blank=True,null=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def update_usage(self, interactions=None, tokens=None):
@@ -43,8 +46,9 @@ class Usage(models.Model):
             self.save()
 
     def __str__(self):
-        return f"{self.chatbot.name} Usage"
-
+        if self.chatbot:
+            return f"{self.chatbot.name} Usage"
+        return  f"Usage{self.id} "
 
 class ContextData(models.Model):
     context_description = models.TextField()
@@ -52,12 +56,14 @@ class ContextData(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Context Data for {self.settings.chatbot.name}"
+        return f"Context Data {self.id}"
 
 class Settings(models.Model):
-    chatbot = models.OneToOneField(Chatbot, on_delete=models.CASCADE, related_name='rel_settings')
+    chatbot = models.OneToOneField(Chatbot, on_delete=models.CASCADE, related_name='rel_settings',
+                                   blank=True, null=True)
     context_length = models.PositiveIntegerField(default=500)
-    context_data = models.OneToOneField(ContextData, on_delete=models.CASCADE, related_name='rel_context_data_settings')
+    context_data = models.OneToOneField(ContextData, on_delete=models.SET_NULL, related_name='rel_context_data_settings',
+                                        blank=True,null=True)
     output_length = models.PositiveIntegerField(default=50)
     limit_summary = models.PositiveIntegerField(default=1000)
     conversation_timeout = models.IntegerField(default=10, help_text="Conversation Timeout in minutes")
@@ -76,7 +82,9 @@ class Settings(models.Model):
     rate_limit = models.IntegerField(default=60, help_text="Maximum requests allowed per minute")
 
     def __str__(self):
-        return f"{self.chatbot.name} Settings"
+        if self.chatbot:
+            return f"{self.chatbot.name} Settings"
+        return f"{self.id} Settings"
 
 
 class ChatbotSession(models.Model):
