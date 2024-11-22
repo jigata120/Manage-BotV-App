@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>NeoTech Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="{% static 'css/users/register-page.css' %}" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <div class="logo">
+        <h1>Neo<span>Tech</span></h1>
+    </div>
+
+
+    <form id="signup-form" method="post">
+    {% csrf_token %}
+
+
+    <div class="non-field-errors">
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">Username</label>
+        {{ form.username }}
+            <div class="error">
+                {% for error in form.errors.username %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+            <div class="error">
+                {% for error in form.email.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.password1.id_for_label }}">Password</label>
+        {{ form.password1 }}
+            <div class="error">
+                {% for error in form.password1.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+        {{ form.password2 }}
+            <div class="error">
+                {% for error in form.password2.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+    </div>
+    {% if form.errors %}
+        <div class="debug-errors">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <p >{{ field.label }}: {{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Submit Button -->
+    <button class="btn btn-primary" type="submit">Sign Up</button>
+
+    <!-- Divider -->
+    <div class="divider">
+        <span>or</span>
+    </div>
+
+    <!-- Google Signup Button -->
+    <button class="btn btn-google" id="google-signup" type="button">
+        <img alt="Google" height="18" src="{% static 'google.png' %}" width="18">
+        Sign up with Google
+    </button>
+
+    <!-- Login Link -->
+    <div class="signup-link">
+        Already have an account? <a href="{% url 'login' %}">Sign in</a>
+    </div>
+</form>
+
+
+    <div class="success-message" id="success-message">
+        Account created successfully!
+    </div>
+</div>
+
+<!--<script src="{% static 'js/users/register-page.js' %}"></script>-->
+
+</body>
+</html>
