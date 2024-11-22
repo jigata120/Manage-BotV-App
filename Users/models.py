@@ -1,14 +1,13 @@
 
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
-from Chatbots.models import Chatbot
-from Subscriptions.models import Subscription
+from django.contrib.auth.models import AbstractUser
+
 
 
 
 class Profile(AbstractUser):
-    subscription = models.ForeignKey(Subscription, on_delete=models.CASCADE,blank=True,null=True,related_name='subs_user')
-    chatbots = models.ManyToManyField(Chatbot,blank=True)
+    subscription = models.ForeignKey('Subscriptions.Subscription', on_delete=models.SET_NULL,blank=True,null=True,related_name='subs_user')
+    chatbots = models.ManyToManyField('Chatbots.Chatbot',blank=True)
     profile_image = models.URLField( blank=True, null=True)
 
 
