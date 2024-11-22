@@ -10,5 +10,5 @@ from .models import Profile
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
 
-    list_display = ('user__username', 'user__email')
-    search_fields = ('user__id','user__username', 'user__emai')
+    list_display = ('username', 'email','subscription__plan__plan_name')
+    search_fields = ('id','username', 'email')
