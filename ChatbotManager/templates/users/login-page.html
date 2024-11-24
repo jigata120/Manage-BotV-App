@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Sign In</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="{% static 'css/users/login-page.css' %}" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <div class="logo">
+        <h1>Neo<span>Tech</span></h1>
+    </div>
+
+    <h2 class="welcome-text">Welcome back</h2>
+
+    <form id="signin-form" method="post">
+        {% csrf_token %}
+
+        <div class="non_field_errors">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+
+
+
+        <!--                <p>{{form.non_field_errors}}</p>-->
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">Username</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+            <div class="error" id="username-error">
+                {% for error in form.username.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.password.id_for_label }}">Password</label>
+            {{ form.password }}
+            {% if form.password.errors %}
+            <div class="error" id="password-error">
+                {% for error in form.password.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="forgot-password">
+            <a href="#">Forgot password?</a>
+        </div>
+
+
+        <button class="btn btn-primary" type="submit">Sign In</button>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <button class="btn btn-google" id="google-signin" type="button">
+            <img alt="Google" height="18" src="{% static 'google.png' %}" width="18">
+            Sign in with Google
+        </button>
+        <div class="signup-link">
+            Don't have an account? <a href="{% url 'register' %}">Sign up</a>
+        </div>
+    </form>
+
+    <div class="success-message" id="success-message">
+        Signed in successfully!
+    </div>
+</div>
+
+<!-- <script src="{% static 'js/users/login-page.js' %}"></script>-->
+</body>
+</html>
+ 
