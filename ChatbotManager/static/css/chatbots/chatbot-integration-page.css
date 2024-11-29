@@ -1,0 +1,140 @@
+:root {
+    /* NeoTech Color Palette */
+    --bg-primary: #1A1A2E;
+    --bg-secondary: #162447;
+    --accent-primary: #0F9DFF;
+    --accent-secondary: #7B61FF;
+    --accent-success: #38E45A;
+    --accent-error: #FF4F6D;
+    --text-primary: #E0E0E0;
+    --text-secondary: #A6A6A6;
+    --text-accent: #FFFFFF;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', 'Roboto', 'Poppins', sans-serif;
+}
+
+.chatbot-integration-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.page-header h1 {
+    color: var(--accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.chatbots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.chatbot-card {
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.chatbot-card:hover {
+    transform: scale(1.03);
+    border-color: var(--accent-primary);
+}
+
+.chatbot-card-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: rgba(15, 157, 255, 0.1);
+}
+
+.chatbot-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+.status-badge {
+    margin-left: auto;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.status-badge.active {
+    background-color: rgba(56, 228, 90, 0.2);
+    color: var(--accent-success);
+}
+
+.status-badge.inactive {
+    background-color: rgba(255, 79, 109, 0.2);
+    color: var(--accent-error);
+}
+
+.code-integration-section {
+    margin-top: 4rem;
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.code-tabs {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.code-tabs .tab {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.code-tabs .tab.active {
+    color: var(--accent-primary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.code-block {
+    display: none;
+    background-color: var(--bg-primary);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.code-block.active {
+    display: block;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--accent-primary);
+    color: var(--text-accent);
+    border: none;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--accent-secondary);
+    border: 1px solid var(--accent-secondary);
+}
