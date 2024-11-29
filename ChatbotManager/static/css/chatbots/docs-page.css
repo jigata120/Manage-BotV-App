@@ -35,14 +35,14 @@
             background-color: var(--secondary-bg);
             padding: 1rem 0;
             position: sticky;
-            top: 0;
+            top: 5rem;
             z-index: 100;
             width: 100%;
         }
 
         .nav-content {
             max-width: 1200px;
-            margin: 6rem auto 0;
+            margin: 1rem auto ;
             padding: 0 1rem;
             display: flex;
             justify-content: space-between;
