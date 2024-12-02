@@ -1,8 +1,6 @@
-// Sample data structure
     let contextEntries = [];
     let tokenCount = 0;
 
-    // Initialize the page
     document.addEventListener('DOMContentLoaded', () => {
         updateStats();
         setupEventListeners();
@@ -15,21 +13,16 @@
     }
 
     function setupEventListeners() {
-        // New Entry Form
         document.getElementById('newEntryForm').addEventListener('submit', (e) => {
-            e.preventDefault();
             addNewEntry();
         });
 
-        // Search functionality
         document.querySelector('.search-bar').addEventListener('input', (e) => {
             filterEntries(e.target.value);
         });
 
-        // Export button
         document.getElementById('exportBtn').addEventListener('click', exportData);
 
-        // Clear button
         document.getElementById('clearBtn').addEventListener('click', clearAllData);
     }
 
@@ -53,8 +46,6 @@
         renderEntries();
         document.getElementById('newEntryForm').reset();
 
-        // Show success message
-        alert('Entry added successfully!');
     }
 
     function renderEntries() {
@@ -112,10 +103,8 @@
         document.getElementById('isPriority').checked = entry.isPriority;
         document.getElementById('expirationDate').value = entry.expirationDate;
 
-        // Remove the old entry
         deleteEntry(id);
 
-        // Scroll to the form
         document.querySelector('.add-entry-form').scrollIntoView({ behavior: 'smooth' });
     }
 
