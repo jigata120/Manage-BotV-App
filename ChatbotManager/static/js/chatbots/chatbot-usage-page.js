@@ -1,5 +1,4 @@
 
-        // Daily Interactions Chart
         const interactionsCtx = document.getElementById('interactionsChart').getContext('2d');
         new Chart(interactionsCtx, {
             type: 'line',
@@ -32,29 +31,6 @@
             }
         });
 
-        // Token Usage Distribution Chart
-//<!--        const tokenUsageCtx = document.getElementById('tokenUsageChart').getContext('2d');-->
-//<!--        new Chart(tokenUsageCtx, {-->
-//<!--            type: 'pie',-->
-//<!--            data: {-->
-//<!--                labels: ['Daily Tokens', 'Monthly Tokens', 'Total Tokens'],-->
-//<!--                datasets: [{-->
-//<!--                    data: [24350, 532890, 1245670],-->
-//<!--                    backgroundColor: ['#0F9DFF', '#7B61FF', '#38E45A']-->
-//<!--                }]-->
-//<!--            },-->
-//<!--            options: {-->
-//<!--                responsive: true,-->
-//<!--                plugins: {-->
-//<!--                    legend: {-->
-//<!--                        position: 'bottom',-->
-//<!--                        labels: { color: '#A6A6A6' }-->
-//<!--                    }-->
-//<!--                }-->
-//<!--            }-->
-//<!--        });-->
-
-        // Activity Timeline Chart
         const activityTimelineCtx = document.getElementById('activityTimelineChart').getContext('2d');
         new Chart(activityTimelineCtx, {
             type: 'bar',
