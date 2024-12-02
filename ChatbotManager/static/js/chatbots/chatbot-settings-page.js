@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-            // Handle collapsible sections
             const collapsibles = document.querySelectorAll('.collapsible');
 
             collapsibles.forEach(button => {
@@ -7,17 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     const content = this.closest('.section').querySelector('.collapsible-content');
                     content.classList.toggle('expanded');
 
-                    // Update button text
                     this.textContent = content.classList.contains('expanded') ? 'Hide' : 'Toggle';
                 });
             });
 
-            // Handle form submission
             const generalSettingsForm = document.getElementById('generalSettings');
             generalSettingsForm.addEventListener('submit', function(e) {
-                e.preventDefault();
 
-                // Simulate saving changes
                 const saveBtn = this.querySelector('button[type="submit"]');
                 const originalText = saveBtn.textContent;
 
@@ -33,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 1000);
             });
 
-            // Initialize progress bar animation
             const progressBars = document.querySelectorAll('.progress-bar');
             progressBars.forEach(bar => {
                 const fill = bar.querySelector('.progress-fill');
