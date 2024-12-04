@@ -1,0 +1,362 @@
+  :root {
+            --primary-bg: #1A1A2E;
+            --secondary-bg: #162447;
+            --primary-accent: #0F9DFF;
+            --secondary-accent: #7B61FF;
+            --success: #38E45A;
+            --error: #FF4F6D;
+            --text-primary: #E0E0E0;
+            --text-secondary: #A6A6A6;
+            --text-white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: var(--secondary-bg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: var(--text-white);
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .back-link {
+            color: var(--primary-accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background-color: var(--success);
+            color: var(--primary-bg);
+        }
+
+        .status-inactive {
+            background-color: var(--error);
+            color: var(--text-white);
+        }
+
+        /* Metrics Cards */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background-color: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-title {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        #interactions,
+        #daily-interactions,
+        #monthly-interactions,
+        #tokens-usage,
+        #daily-tokens-usage,
+        #monthly-tokens-usage {
+            transition: color 0.5s ease, transform 0.5s ease;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .metric-value {
+            color: var(--text-white);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .high-usage {
+            transition: color 0.5s ease, transform 0.5s ease;
+            color: var(--error);
+            transform: scale(1.1);
+
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background-color: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            height: 300px;
+        }
+
+        .chart-card h3 {
+            color: var(--primary-accent);
+            margin-bottom: 1rem;
+        }
+
+        /* Table Styles */
+        .monitoring-table {
+            background-color: var(--secondary-bg);
+            border-radius: 8px;
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        .monitoring-table th,
+        .monitoring-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .monitoring-table th {
+            background-color: rgba(15, 157, 255, 0.1);
+            color: var(--primary-accent);
+            font-weight: 600;
+        }
+
+        .monitoring-table tr:hover {
+            background-color: rgba(15, 157, 255, 0.05);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .pagination-btn {
+            background-color: var(--secondary-bg);
+            color: var(--text-white);
+            border: 1px solid var(--primary-accent);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .pagination-btn:hover {
+            background-color: var(--primary-accent);
+        }
+        /* Mobile Responsiveness Additions */
+@media (min-width: 500px) and (max-width: 769px) {
+.chart-card{
+    height: 350px;
+    padding: 1rem;
+}
+@media (max-width: 499px) {
+}
+.chart-card{
+    height: 250px;
+    padding: 1rem;
+}
+}
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    /* Header Adjustments */
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .back-link {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Metrics Grid */
+    .metrics-grid {
+        grid-template-columns: 1fr 1fr; /* 2 columns on mobile */
+        gap: 1rem;
+    }
+
+    .metric-card {
+        padding: 1rem;
+    }
+
+    .metric-title {
+        font-size: 0.8rem;
+    }
+
+    .metric-value {
+        font-size: 1.2rem;
+    }
+
+    /* Charts Container */
+    .charts-container {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        gap: 1rem;
+    }
+
+
+
+    .chart-card h3 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Table Responsiveness */
+    .monitoring-table {
+        font-size: 0.8rem;
+    }
+
+    .monitoring-table th,
+    .monitoring-table td {
+        padding: 0.5rem;
+    }
+
+    /* Pagination */
+    .pagination {
+        flex-wrap: wrap;
+        gap: 0.3rem;
+    }
+
+    .pagination-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    /* Ensure Charts are Responsive */
+    canvas {
+        max-width: 100%;
+        height: auto !important;
+    }
+}
+
+/* Additional Mobile Improvements */
+@media screen and (max-width: 480px) {
+    .metrics-grid {
+        grid-template-columns: 1fr; /* Single column on very small screens */
+    }
+
+    .header {
+        text-align: center;
+        align-items: center;
+    }
+
+    .status-badge {
+        align-self: center;
+        margin-top: 0.5rem;
+    }
+}
+
+/* Touch-friendly Adjustments */
+@media (pointer: coarse) {
+    .metric-card,
+    .pagination-btn,
+    .monitoring-table tr {
+        min-height: 44px; /* WCAG touch target size recommendation */
+        cursor: pointer;
+    }
+
+    .metric-card:active,
+    .pagination-btn:active,
+    .monitoring-table tr:active {
+        background-color: rgba(15, 157, 255, 0.1);
+        transition: background-color 0.2s;
+    }
+}
+
+/* Scrollbar Styling for Dark Theme */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--secondary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-accent);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-accent);
+}
+
+/* Ensure Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* Print Stylesheet */
+@media print {
+    body {
+        background-color: white;
+        color: black;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .header, .charts-container, .pagination {
+        display: none;
+    }
+
+    .monitoring-table {
+        border: 1px solid black;
+    }
+
+    .monitoring-table th,
+    .monitoring-table td {
+        border: 1px solid black;
+        color: black;
+    }
+}
