@@ -1,0 +1,119 @@
+{% extends  'base.html' %}
+
+{% block title %}
+Settings
+{% endblock %}
+
+
+{% block style %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css" rel="stylesheet">
+{% load static %}
+<link href="{% static 'css/chatbots/chatbot-settings-page.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <!-- Settings Summary -->
+    <section class="section" id="summary">
+        <div class="section-header">
+            <h2 class="section-title">Settings Summary</h2>
+            <button class="btn btn-secondary collapsible">Toggle</button>
+        </div>
+        <div class="collapsible-content">
+            <div class="grid">
+                <div class="card">
+                    <label>Bot Name</label>
+                    <p>{{bot.name}}</p>
+                </div>
+                <div class="card">
+                    <label>Conversation ID</label>
+                    <p>conv_123456789</p>
+                </div>
+                <div class="card">
+                    <label>API Key</label>
+                    <p>{{bot.apikey}}</p>
+                </div>
+                <div class="card">
+                    <label>Usage</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Context Data</h2>
+        </div>
+        <div class="card">
+            <h3 style="color: var(--text-white); margin-bottom: 1rem;">Recent Context</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Last updated: 2024-10-28 14:30:00</p>
+            <a href="{% url 'chatbots_settings_data_page' bot.settings.context_data.id %}">
+                <button class="btn btn-secondary">Manage Context</button>
+
+            </a>
+        </div>
+    </section>
+
+    <!-- General Bot Settings -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">General Settings</h2>
+        </div>
+        <form id="generalSettings" method="post">
+            {% csrf_token %}
+
+            {{form}}
+
+            <button class="btn btn-primary" type="submit">Save Changes</button>
+        </form>
+    </section>
+
+
+    <!-- Advanced Configuration -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Advanced Configuration</h2>
+            <button class="btn btn-secondary collapsible">Toggle</button>
+        </div>
+        <div class="collapsible-content">
+            <div class="grid">
+                <div class="form-group">
+                    <label for="timeout">Conversation Timeout (minutes)</label>
+                    <input id="timeout" type="number" value="10">
+                </div>
+                <div class="form-group">
+                    <label for="language">Interaction Language</label>
+                    <select id="language">
+                        <option value="en">English</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="personality">Bot Personality</label>
+                    <select id="personality">
+                        <option value="professional">Professional</option>
+                        <option value="friendly">Friendly</option>
+                        <option value="formal">Formal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rateLimit">Rate Limit (requests/minute)</label>
+                    <input id="rateLimit" type="number" value="60">
+                </div>
+            </div>
+            <button class="btn btn-primary">Save Advanced Settings</button>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script src="{% static 'js/chatbots/chatbot-settings-page.js' %}"></script>
+
+{% endblock %}
