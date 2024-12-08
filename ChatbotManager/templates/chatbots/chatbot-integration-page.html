@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SalesBOT Integration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #1A1A2E;
+            --secondary-bg: #162447;
+            --primary-accent: #0F9DFF;
+            --secondary-accent: #7B61FF;
+            --highlight-green: #38E45A;
+            --warning-red: #FF4F6D;
+            --primary-text: #E0E0E0;
+            --secondary-text: #A6A6A6;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: var(--secondary-bg);
+            padding: 30px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary-accent);
+        }
+
+        .header h1 {
+            color: var(--primary-accent);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--secondary-text);
+        }
+
+        .bot-details {
+            display: flex;
+            background-color: var(--secondary-bg);
+            margin: 20px 0;
+            border-radius: 8px;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .details-column {
+            flex: 1;
+        }
+
+        .details-item {
+            margin-bottom: 15px;
+        }
+
+        .details-item label {
+            color: var(--secondary-accent);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .details-item .value {
+            background-color: var(--primary-bg);
+            padding: 10px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .masked-value {
+            letter-spacing: 2px;
+            user-select: none;
+        }
+
+        .reveal-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary-accent);
+            cursor: pointer;
+        }
+
+        .code-section {
+            background-color: var(--secondary-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .code-tabs {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .code-tab {
+            padding: 10px 15px;
+            background-color: var(--primary-bg);
+            margin-right: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            color: var(--secondary-text);
+        }
+
+        .code-tab.active {
+            background-color: var(--primary-accent);
+            color: var(--white);
+        }
+
+        pre {
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .preview-section {
+            background-color: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .preview-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: 1px solid var(--primary-accent);
+        }
+
+        .footer {
+            background-color: var(--secondary-bg);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: var(--primary-accent);
+            margin: 0 10px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Integration for SalesBOT</h1>
+            <p>Easily integrate your chatbot into any platform with the provided scripts and configurations</p>
+        </div>
+
+        <div class="bot-details">
+            <div class="details-column">
+                <div class="details-item">
+                    <label>Chatbot Name</label>
+                    <div class="value">SalesBOT</div>
+                </div>
+                <div class="details-item">
+                    <label>Status</label>
+                    <div class="value" style="color: #38E45A;">Active</div>
+                </div>
+                <div class="details-item">
+                    <label>Description</label>
+                    <div class="value">AI-powered sales assistant for customer engagement</div>
+                </div>
+            </div>
+            <div class="details-column">
+                <div class="details-item">
+                    <label>API Key</label>
+                    <div class="value">
+                        <span class="masked-value">********</span>
+                        <button class="reveal-btn" onclick="toggleApiKey(this)">👁️</button>
+                    </div>
+                </div>
+                <div class="details-item">
+                    <label>Token Limit</label>
+                    <div class="value">5000</div>
+                </div>
+                <div class="details-item">
+                    <label>Default Theme</label>
+                    <div class="value">Dark</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="code-section">
+            <div class="code-tabs">
+                <div class="code-tab active" data-lang="html">HTML</div>
+                <div class="code-tab" data-lang="js">JavaScript</div>
+                <div class="code-tab" data-lang="python">Python</div>
+            </div>
+            <pre id="code-block"><code class="language-html">&lt;script src="https://salesbot.ai/embed.js"
+    data-bot-id="salesbot-123"
+    data-domain="yourwebsite.com"
+    data-theme="dark"&gt;
+&lt;/script&gt;</code></pre>
+            <button onclick="copyCode()" style="background-color: #0F9DFF; color: white; border: none; padding: 10px 15px; border-radius: 4px; margin-top: 10px;">Copy Code</button>
+        </div>
+
+        <div class="preview-section">
+            <div class="preview-options">
+                <select id="theme-selector">
+                    <option value="dark">Dark Theme</option>
+                    <option value="light">Light Theme</option>
+                </select>
+                <select id="size-selector">
+                    <option value="desktop">Desktop</option>
+                    <option value="mobile">Mobile</option>
+                </select>
+            </div>
+            <iframe src="https://salesbot.ai/preview?theme=dark" id="chatbot-preview"></iframe>
+        </div>
+
+        <div class="footer">
+            <a href="#">Full Documentation</a>
+            <a href="#">Support</a>
+            <a href="#">FAQs</a>
+            <a href="#" style="background-color: #7B61FF; color: white; padding: 8px 15px; border-radius: 4px;">Return to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleApiKey(btn) {
+            const maskedValue = btn.previousElementSibling;
+            if (maskedValue.textContent === '********') {
+                maskedValue.textContent = 'sk-abc123def456ghi789';
+                btn.textContent = '🙈';
+            } else {
+                maskedValue.textContent = '********';
+                btn.textContent = '👁️';
+            }
+        }
+
+        function copyCode() {
+            const codeBlock = document.querySelector('#code-block code');
+            navigator.clipboard.writeText(codeBlock.textContent);
+            alert('Code copied to clipboard!');
+        }
+
+        document.querySelectorAll('.code-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const lang = tab.dataset.lang;
+                document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const codeBlock = document.querySelector('#code-block code');
+                const codeSnippets = {
+                    html: `&lt;script src="https://salesbot.ai/embed.js"
+    data-bot-id="salesbot-123"
+    data-domain="yourwebsite.com"
+    data-theme="dark"&gt;
+&lt;/script&gt;`,
+                    js: `const salesBot = new SalesBot({
+    botId: 'salesbot-123',
+    domain: 'yourwebsite.com',
+    theme: 'dark'
+});
+salesBot.initialize();`,
+                    python: `from salesbot import SalesBotClient
+
+client = SalesBotClient(
+    bot_id='salesbot-123',
+    api_key='your_api_key_here'
+)
+response = client.send_message('Hello, can you help me?')`
+                };
+
+                codeBlock.textContent = codeSnippets[lang];
+            });
+        });
+
+        document.getElementById('theme-selector').addEventListener('change', (e) => {
+            const preview = document.getElementById('chatbot-preview');
+            preview.src = `https://salesbot.ai/preview?theme=${e.target.value}`;
+        });
+
+        document.getElementById('size-selector').addEventListener('change', (e) => {
+            const preview = document.getElementById('chatbot-preview');
+            preview.style.height = e.target.value === 'mobile' ? '600px' : '500px';
+        });
+    </script>
+</body>
+</html>
