@@ -1,0 +1,102 @@
+{% extends  'base.html' %}
+
+{% block title %}
+Context Data Management
+{% endblock %}
+
+
+{% block style %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css" rel="stylesheet">
+{% load static %}
+<link href="{% static 'css/chatbots/chatbot-data-settings-page.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <!-- Context Overview & Quick Stats -->
+    <section class="header">
+        <h1>Context Data Management</h1>
+        <div class="quick-stats">
+            <div class="stat-card">
+                <h3>TOTAL ENTRIES</h3>
+                <p id="totalEntries">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>TOKEN USAGE</h3>
+                <p id="tokenUsage">0/500</p>
+            </div>
+            <div class="stat-card">
+                <h3>LAST UPDATED</h3>
+                <p id="lastUpdated">Never</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Add New Entry Form -->
+    <section class="add-entry-form">
+        <h2 style="margin-bottom: 1.5rem; color: var(--text-white);">Edit Context Data</h2>
+        <form  method="post">
+            {% csrf_token %}
+            {{form}}
+            <button class="btn btn-primary" type="submit">Save Data</button>
+
+        </form>
+
+        <h2 style="margin-bottom: 1.5rem; color: var(--text-white);">Add New Context Entry</h2>
+        <form id="newEntryForm">
+
+            <div class="form-group">
+                <label>Context Entry</label>
+                <textarea class="form-control" id="entryText" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Tags</label>
+                <input class="form-control" id="entryTags" placeholder="Separate tags with commas" type="text">
+            </div>
+            <div class="form-group">
+                <label>
+                    <input id="isPriority" type="checkbox"> Mark as Important
+                </label>
+            </div>
+            <div class="form-group">
+                <label>Expiration Date</label>
+                <input class="form-control" id="expirationDate" type="date">
+            </div>
+            <button class="btn btn-primary" type="submit">Save Entry</button>
+        </form>
+    </section>
+     <!-- Context Entries List -->
+    <section class="entries-list">
+        <div class="entries-controls">
+            <input class="search-bar" placeholder="Search entries..." type="text">
+            <div class="button-group">
+                <button class="btn btn-secondary" id="exportBtn">Export Data</button>
+                <button class="btn btn-danger" id="clearBtn">Clear All</button>
+            </div>
+        </div>
+        <table class="entries-table">
+            <thead>
+            <tr>
+                <th>Entry ID</th>
+                <th>Context Snippet</th>
+                <th>Timestamp</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="entriesTableBody">
+            <!-- Entries will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </section>
+</div>
+{% endblock %}
+
+
+{% block script %}
+ <script src="{% static 'js/chatbots/chatbot-data-settings-page.js' %}"></script>
+{% endblock %}
+
