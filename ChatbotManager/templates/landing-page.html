@@ -1,0 +1,372 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block title %}
+BotV Overview
+{% endblock %}
+
+
+{% block style %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css" rel="stylesheet">
+{% load static %}
+<!--<link href="{% static 'css/chatbots/dashboard-page.css' %}" rel="stylesheet">-->
+<link
+href="{% static 'landing-assets/img/favicon.png'%}"
+rel="shortcut icon"
+type="image/x-icon"/>
+{% load static %}
+
+<link href="{% static 'landing-assets/css/bootstrap.min.css' %}" rel="stylesheet" />
+<link href="{% static 'landing-assets/css/lineicons.css' %}" rel="stylesheet" />
+<link href="{% static 'landing-assets/css/animate.css' %}" rel="stylesheet" />
+<link href="{% static 'landing-assets/css/main.css' %}" rel="stylesheet" />
+
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="preloader">
+        <div class="loader">
+            <div class="spinner">
+                <div class="spinner-container">
+                    <div class="spinner-rotator">
+                        <div class="spinner-left">
+                            <div class="spinner-circle"></div>
+                        </div>
+                        <div class="spinner-right">
+                            <div class="spinner-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- preloader end -->
+
+
+    <!-- ======== hero-section start ======== -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <div class="row align-items-center position-relative">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="wow fadeInUp" data-wow-delay=".4s">
+                            Seamless Chatbot Integration for Your Business
+                        </h1>
+                        <p class="wow fadeInUp" data-wow-delay=".6s">
+                            Easily integrate customizable chatbots into your websites with our secure, user-friendly
+                            platform. Manage settings, themes, and analytics effortlessly.
+                        </p>
+                        <a
+                                class="main-btn border-btn btn-hover wow fadeInUp"
+                                data-wow-delay=".6s"
+                                href="#features"
+                        >Explore Features</a
+                        >
+                        <a class="scroll-bottom" href="#about">
+                            <i class="lni lni-arrow-down"></i
+                            ></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-img wow fadeInUp" data-wow-delay=".5s">
+                        <img alt="Chatbot Integration" src="{% static 'landing-assets/img/hero/hero-img.png'%}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== hero-section end ======== -->
+
+    <!-- ======== feature-section start ======== -->
+    <section class="feature-section pt-120" id="features">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-8 col-sm-10">
+                    <div class="single-feature">
+                        <div class="icon">
+                            <i class="lni lni-code"></i>
+                        </div>
+                        <div class="content">
+                            <h3>Customizable Themes</h3>
+                            <p>
+                                Tailor your chatbot's appearance to match your brand. Choose colors, styles, and
+                                interaction designs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8 col-sm-10">
+                    <div class="single-feature">
+                        <div class="icon">
+                            <i class="lni lni-chart"></i>
+                        </div>
+                        <div class="content">
+                            <h3>Analytics Dashboard</h3>
+                            <p>
+                                Gain insights into user interactions, conversation success rates, and bot performance
+                                metrics.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8 col-sm-10">
+                    <div class="single-feature">
+                        <div class="icon">
+                            <i class="lni lni-lock"></i>
+                        </div>
+                        <div class="content">
+                            <h3>Enhanced Security</h3>
+                            <p>
+                                Ensure data privacy and protection with our secure integration and encrypted
+                                communication protocols.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== feature-section end ======== -->
+
+    <!-- ======== about-section start ======== -->
+    <section class="about-section pt-150" id="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-6 col-lg-6">
+                    <div class="about-img">
+                        <img alt="About Chatbots" class="w-100" src="{% static 'landing-assets/img/about/about-1.png' %}"/>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6">
+                    <div class="about-content">
+                        <div class="section-title mb-30">
+                            <h2 class="mb-25 wow fadeInUp" data-wow-delay=".2s">
+                                Transform Customer Engagement
+                            </h2>
+                            <p class="wow fadeInUp" data-wow-delay=".4s">
+                                Our chatbot solution helps businesses automate responses, improve customer satisfaction,
+                                and reduce operational costs.
+                            </p>
+                        </div>
+                        <a
+                                class="main-btn btn-hover border-btn wow fadeInUp"
+                                data-wow-delay=".6s"
+                                href="javascript:void(0)"
+                        >Learn More</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== about-section end ======== -->
+
+    <!-- ======== about2-section start ======== -->
+    <section class="about-section pt-150" id="about2">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-6 col-lg-6">
+                    <div class="about-content">
+                        <div class="section-title mb-30">
+                            <h2 class="mb-25 wow fadeInUp" data-wow-delay=".2s">
+                                Seamless Chatbot Integration with Advanced Customization
+                            </h2>
+                            <p class="wow fadeInUp" data-wow-delay=".4s">
+                                Effortlessly embed and manage chatbots on your platform with our comprehensive tools.
+                                From custom themes to data-driven analytics, we provide everything you need to enhance
+                                user engagement.
+                            </p>
+                        </div>
+                        <ul>
+                            <li>Quick and Secure Integration</li>
+                            <li>Fully Customizable Settings</li>
+                            <li>Responsive 24/7 Support</li>
+                        </ul>
+                        <a
+                                class="main-btn btn-hover border-btn wow fadeInUp"
+                                data-wow-delay=".6s"
+                                href="javascript:void(0)"
+                        >Learn More</a>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 order-first order-lg-last">
+                    <div class="about-img-2">
+                        <img alt="Chatbot Integration" class="w-100" src="{% static 'landing-assets/img/about/about-2.png' %}"/>
+                        <img alt="" class="shape shape-1" src="{% static 'landing-assets/img/about/about-right-shape.svg' %}"/>
+                        <img alt="" class="shape shape-2" src="{% static 'landing-assets/img/about/right-dots.svg' %}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ======== about2-section end ======== -->
+
+    <!-- ======== feature-section start ======== -->
+    <section class="feature-extended-section pt-100" id="why">
+        <div class="feature-extended-wrapper">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xxl-5 col-xl-6 col-lg-8 col-md-9">
+                        <div class="section-title text-center mb-60">
+                            <h2 class="mb-25 wow fadeInUp" data-wow-delay=".2s">
+                                Why Choose Our Chatbot SaaS
+                            </h2>
+                            <p class="wow fadeInUp" data-wow-delay=".4s">
+                                From intuitive setup to robust analytics, our platform is built to simplify chatbot
+                                management while enhancing your users' experience.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-feature-extended">
+                            <div class="icon">
+                                <i class="lni lni-display"></i>
+                            </div>
+                            <div class="content">
+                                <h3>Seamless Embedding</h3>
+                                <p>
+                                    Integrate chatbots on any platform effortlessly using our customizable embedding
+                                    script.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-feature-extended">
+                            <div class="icon">
+                                <i class="lni lni-leaf"></i>
+                            </div>
+                            <div class="content">
+                                <h3>Customizable Themes</h3>
+                                <p>
+                                    Match your brand identity with fully customizable chatbot themes and components.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-feature-extended">
+                            <div class="icon">
+                                <i class="lni lni-grid-alt"></i>
+                            </div>
+                            <div class="content">
+                                <h3>Data-Driven Insights</h3>
+                                <p>
+                                    Monitor and optimize chatbot performance with detailed analytics and user behavior
+                                    insights.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-feature-extended">
+                            <div class="icon">
+                                <i class="lni lni-javascript"></i>
+                            </div>
+                            <div class="content">
+                                <h3>Effortless Integration</h3>
+                                <p>
+                                    Our lightweight embedding script ensures smooth and quick integration with minimal
+                                    effort.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-feature-extended">
+                            <div class="icon">
+                                <i class="lni lni-layers"></i>
+                            </div>
+                            <div class="content">
+                                <h3>Scalable Solutions</h3>
+                                <p>
+                                    Grow your chatbot usage seamlessly with our scalable architecture designed for
+                                    businesses of all sizes.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-feature-extended">
+                            <div class="icon">
+                                <i class="lni lni-rocket"></i>
+                            </div>
+                            <div class="content">
+                                <h3>24/7 Support</h3>
+                                <p>
+                                    Our team is always available to assist you with any issues or questions, ensuring
+                                    uninterrupted service.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ======== feature-section end ======== -->
+
+    <!-- ======== about2-section end ======== -->
+
+    <!-- ======== feature-section start ======== -->
+
+
+    <!-- ======== subscribe-section start ======== -->
+    <section class="subscribe-section pt-120" id="contact">
+        <div class="container">
+            <div class="subscribe-wrapper img-bg">
+                <div class="row align-items-center">
+                    <div class="col-xl-6 col-lg-7">
+                        <div class="section-title mb-15">
+                            <h2 class="text-white mb-25">Stay Updated</h2>
+                            <p class="text-white pr-5">
+                                Join our newsletter for the latest updates, new features, and exclusive insights
+                                tailored to your business needs.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-5">
+                        <form action="#" class="subscribe-form">
+                            <input
+                                    id="subs-email"
+                                    name="subs-email"
+                                    placeholder="Enter your email address"
+                                    type="email"
+                            />
+                            <button class="main-btn btn-hover" type="submit">
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<a class="scroll-top btn-hover" href="#">
+    <i class="lni lni-chevron-up"></i>
+</a>
+
+
+{% endblock %}
+
+
+{% block script %}
+<!-- ======== JS here ======== -->
+{% load static %}
+
+<script src="{% static 'landing-assets/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'landing-assets/js/wow.min.js' %}"></script>
+<script src="{% static 'landing-assets/js/main.js' %}"></script>
+
+<script src="{% static 'js/chatbots/dashboard-page.js' %}"></script>
+{% endblock %}
+
