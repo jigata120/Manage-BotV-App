@@ -1,0 +1,40 @@
+{% extends  'chatbots/playground-page.html' %}
+{% load static %}
+
+
+
+
+
+{% block style-bot %}
+<link href="{% static  'dist/assets/main-5yRlv9wV.css' %}" rel="stylesheet">
+<style>
+     .h-screen{
+        height: 70vh;
+     }
+     #root p,#root label{
+     color:black;
+     )
+     @media (max-width: 768px) {
+          .h-screen{
+             height: 80vh;
+          }
+     }
+
+
+</style>
+{% endblock %}
+
+
+{% block content-bot %}
+
+
+<div id="root" data-name="{{bot.apikey}}"></div>
+
+
+{% endblock %}
+
+
+{% block script-bot %}
+<script src="{% static  'dist/assets/main-DZ0fXshc.js' %}" type="module"></script>
+
+{% endblock %}
