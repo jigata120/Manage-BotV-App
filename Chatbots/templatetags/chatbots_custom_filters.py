@@ -15,9 +15,10 @@ def format_number(value):
 @register.filter
 def format_to_k(value):
     """
-    924 -> 924
-    1334 -> 1.3k
-    1334214 -> 1,334k
+    Formats numbers to readable forms:
+    - 924 -> "924"
+    - 1334 -> "1.3K"
+    - 1334214 -> "1,334K"
     """
     try:
         value = int(value)
@@ -27,10 +28,10 @@ def format_to_k(value):
     if value < 1000:
         return f"{value}"
     elif value < 1_000_000:
-        return f"{value / 1000:.1f}K".replace('.0K', 'K')
+        return f"{value / 1000:.1f}K".rstrip('.0K') + "K"
     else:
         thousands = value / 1000
-        return f"{thousands:,.1f}K".replace('.0K', 'K')
+        return f"{thousands:,.1f}K".rstrip('.0K') + "K"
 
 
 @register.filter(name='attr')
