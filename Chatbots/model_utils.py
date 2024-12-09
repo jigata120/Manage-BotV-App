@@ -37,27 +37,27 @@ def custom_timesince(updated_at):
     """
     time_difference = now() - updated_at
 
-    # Handle days
+
     if time_difference.days > 0:
         if time_difference.days == 1:
             return "1 day ago"
         return f"{time_difference.days} days ago"
 
-    # Handle hours
+
     hours = time_difference.seconds // 3600
     if hours > 0:
         if hours == 1:
             return "1 hour ago"
         return f"{hours} hours ago"
 
-    # Handle minutes
+
     minutes = (time_difference.seconds % 3600) // 60
     if minutes > 0:
         if minutes == 1:
             return "1 minute ago"
         return f"{minutes} minutes ago"
 
-    # Handle seconds
+
     seconds = time_difference.seconds % 60
     if seconds == 1:
         return "1 second ago"
