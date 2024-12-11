@@ -1,0 +1,106 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}?{% now 'U' %}" rel="stylesheet">
+
+    <style>
+
+
+    </style>
+    {% block style %}
+    {% endblock %}
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">BOT-F</div>
+        <div class="nav-links">
+
+            {% if request.user.is_authenticated  %}
+
+                {% if request.user.subscription or request.user.is_superuser or request.user.groups.exists %}
+
+                <a href="{% url 'index' %}"
+                   style="{% if request.resolver_match.url_name == 'dashboard' %}color: var(--neon-purple);{% endif %}">
+                    Dashboard
+                </a>
+                <a href="{% url 'subscriptions-and-billing' %}"
+                   style="{% if request.resolver_match.url_name == 'subscriptions-and-billing' %}color: var(--electric-blue);{% endif %}">
+                    Billing
+                </a>
+                {% else %}
+                <a href="{% url 'pricing' %}"
+                   style="{% if request.resolver_match.url_name == 'pricing' %}color: var(--electric-blue);{% endif %}">
+                    Pricing
+                </a>
+                {% endif %}
+            <a href="{% url 'playground_page' %}"
+               style="{% if request.resolver_match.url_name == 'playground_page' %}color: var(--electric-blue);{% endif %}">
+                Playground
+            </a>
+
+
+            {% else %}
+            <a href="{% url 'pricing' %}"
+               style="{% if request.resolver_match.url_name == 'pricing' %}color: var(--electric-blue);{% endif %}">
+                Pricing
+            </a>
+            {% endif %}
+
+
+            <a href="{% url 'documentation_page' %}"
+               style="{% if request.resolver_match.url_name == 'documentation_page' %}color: var(--electric-blue);{% endif %}">
+                Documentation
+            </a>
+
+        </div>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'profile' request.user.id%}">
+            <button class="button button-secondary"
+                    style="{% if request.resolver_match.url_name == 'profile' %}color: var(--neon-purple);{% endif %}">
+                {{request.user.username|capfirst}}'s Profile
+            </button>
+        </a>
+        {% else %}
+        <a href="{% url 'login' %}">
+            <button class="cta-button">Try now FREE</button>
+        </a>
+
+        {% endif %}
+        <!--        <a href="{% url 'register' %}">-->
+        <!--        </a>-->
+    </nav>
+</header>
+<div class="mb-3"></div>
+
+{% block content %}
+
+{% endblock %}
+
+<footer>
+    <div class="footer-content">
+        <div class="logo">BOT-F</div>
+        <div class="footer-links">
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Support</a>
+        </div>
+    </div>
+</footer>
+
+{% block script %}
+{% endblock %}
+
+</body>
+</html>
