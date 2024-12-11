@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Page</title>
+    <link href="{% static  'dist/assets/main-5yRlv9wV.css' %}" rel="stylesheet">
+    <style>
+<!--         .h-screen{-->
+<!--            height: 70vh;-->
+<!--         }-->
+<!--         #root p,#root label{-->
+<!--         color:black;-->
+<!--         )-->
+<!--         @media (max-width: 768px) {-->
+<!--              .h-screen{-->
+<!--                 height: 100vh;-->
+<!--              }-->
+<!--         }-->
+    </style>
+</head>
+<body>
+    <div id="root" data-name="{{bot.apikey}}"></div>
+    <script src="{% static  'dist/assets/main-DZ0fXshc.js' %}" type="module"></script>
+
+</body>
+
+</html>
