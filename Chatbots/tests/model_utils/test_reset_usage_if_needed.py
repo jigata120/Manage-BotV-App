@@ -24,7 +24,7 @@ class ResetUsageTestCase(TestCase):
 
     @patch("Chatbots.model_utils.timezone.now")
     def test_reset_usage_if_needed(self, mock_now):
-        mock_now.return_value = make_aware(datetime(2024, 12, 11, 12, 0))
+        mock_now.return_value = make_aware(datetime(2025, 12, 31, 12, 0))
         reset_applied = reset_usage_if_needed()
 
         self.assertTrue(reset_applied)
