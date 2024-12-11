@@ -1,12 +1,12 @@
 # vevn
 - create and activate:
      ```bash
-      python -m venv vevn
+      python -m venv venv
       source ./venv/bin/activate 
 # Requirements: 
 - command
     ```bash
-        pip freeze > requirements.txt
+        pip install -r requirements.txt
 
 # Database Setup
 
@@ -14,7 +14,7 @@
 Follow these steps:
 1. Copy the `.env` file from this Google docs to your `.env`:
    https://docs.google.com/document/d/19rYhp5h2gJuBBxF73XGrrN4ms9kQeJXCAmepEXsOYww/edit?usp=sharing
-2. Apply migrations:
+2. Apply migrations if using new db :
    ```bash
    python3 manage.py makemigrations
    python3 manage.py migrate
