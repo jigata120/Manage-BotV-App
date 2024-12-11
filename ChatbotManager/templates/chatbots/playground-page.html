@@ -1,0 +1,88 @@
+{% extends  'base.html' %}
+{% load static %}
+
+
+{% block title %}
+Playground
+{% endblock %}
+
+
+{% block style %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+{% load static %}
+<link href="{% static 'css/chatbots/playground-page.css' %}" rel="stylesheet">
+{% block style-bot %}
+
+{% endblock %}
+<!--<link href="{% static  'css/index-5yRlv9wV.css' %}" rel="stylesheet">-->
+{% endblock %}
+
+
+{% block content %}
+<div class="container-chat">
+    <div class="header-content">
+        <div class="user-profile">
+            <div class="avatar">JD</div>
+            <div class="user-info">
+                <h3>John Doe</h3>
+                <span class="plan-info">Basic Plan - 50 interactions/month</span>
+            </div>
+        </div>
+        <div class="usage-stats">
+            <span>45/50 interactions remaining</span>
+            <div class="usage-indicator">
+                <div class="usage-progress"></div>
+            </div>
+        </div>
+    </div>
+    <main class="main-content">
+        <div class="chatbot-container">
+            <div class="chatbot-header">
+                <div class="chatbot-status">
+                    <div class="status-indicator"></div>
+                    <span>Chatbot Online</span>
+                </div>
+            </div>
+            <div class="chatbot-iframe-container">
+                <!--                <iframe-->
+                <!--                        class="chatbot-iframe"-->
+                <!--                        id="chatbot-iframe"-->
+                <!--                        loading="lazy"-->
+                <!--                        sandbox="allow-scripts allow-same-origin"-->
+                <!--                        src="about:blank"-->
+                <!--                        title="Chatbot">-->
+                <!--                </iframe>-->
+
+
+                {% block content-bot %}
+                {% endblock %}
+
+
+                <div class="loading-overlay" id="loading-overlay">
+                    <div class="spinner"></div>
+                    <span>Loading chatbot...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-access">
+            <button class="quick-button">How can you help me?</button>
+            <button class="quick-button">Show my plan details</button>
+            <button class="quick-button">Start new conversation</button>
+            <button class="quick-button">Technical support</button>
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script src="{% static 'js/chatbots/playground-page.js' %}"></script>
+<!--<script src="{% static  'js/index-Dc301iZy.js' %}" type="module"></script>-->
+{% block script-bot %}
+{% endblock %}
+
+{% endblock %}
+
+
