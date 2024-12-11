@@ -1,0 +1,247 @@
+{% extends  'base.html' %}
+
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+
+{% block style %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css" rel="stylesheet">
+{% load static %}
+<link href="{% static 'css/chatbots/dashboard-page.css' %}?{% now 'U' %}" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block content %}
+<div class="dashboard-grid">
+    <!-- Bot Management Card -->
+    <div class="card">
+        <h2 class="card-title">Bot Management</h2>
+        <button class="btn" onclick="showNewBotModal()">New Chatbot</button>
+
+        <div class="m-t row">
+            <div class="metric">
+                <div class="metric-title">Bots</div>
+                <div class="metric-value">{{bots_count}}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-title">Active Bots</div>
+                <div class="metric-value">{{active_bots_count}}</div>
+            </div>
+        </div>
+
+        <ul class="bot-list">
+            {% for bot in latest_4_bots%}
+            <li class="bot-item">
+                <span><span class="bot-status {% if bot.status %} status-active {% else%} status-inactive {% endif%}">
+                </span>{{ bot.name }}</span>
+                <a href="#">
+                <button class=" btn btn-secondary">Edit</button>
+                </a>
+            </li>
+            {% endfor %}
+
+        </ul>
+        <a href="{% url 'chatbots_manage_page' %}">
+            <button class="btn btn-secondary down">View All Chatbots</button>
+        </a>
+
+    </div>
+    <div class="card monitoring-card">
+        <h2 class="card-title">Bot Monitoring</h2>
+
+
+        {% for usage in usages %}
+        <div class="monitoring-item">
+            <div class="monitoring-header">
+                <h3 class="bot-name">{{ latest_bot.name }}</h3>
+                <span class="last-update" id="last-update">Updated: {{ usage.updated_at|timesince }} ago</span>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-label">Daily Interactions</span>
+                    <span class="stat-value" id="daily-interactions">{{ usage.daily_interactions }}</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Monthly Interactions</span>
+                    <span class="stat-value" id="monthly-interactions">{{ usage.monthly_interactions }}</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Daily Tokens</span>
+                    <span class="stat-value" id="daily-tokens">{{ usage.daily_tokens_usage }}</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Monthly Tokens</span>
+                    <span class="stat-value" id="monthly-tokens">{{ usage.monthly_tokens_usage }}</span>
+                </div>
+            </div>
+
+            <a href="{% url 'chatbot_usage_page' latest_bot.id %}">
+                <button class="btn-monitor" >
+                    View Details
+                </button>
+            </a>
+        </div>
+        {% endfor %}
+
+    </div>
+    <!-- Settings Summary Card -->
+    <div class="card">
+        <h2 class="card-title">Settings Summary</h2>
+
+        <div class="settings-grid">
+            <div class="setting-item">
+                <div class="metric-title">Roles</div>
+                <div class="metric-value">4</div>
+            </div>
+            <div class="setting-item">
+                <div class="metric-title">User Tiers</div>
+                <div class="metric-value">3</div>
+            </div>
+        </div>
+
+        <div class="context-preview">
+            <h3 class="metric-title">Security Settings</h3>
+            <p style="color: var(--text-secondary);">IP Whitelist: Enabled</p>
+            <p style="color: var(--text-secondary);">Access Hours: 24/7</p>
+            <p style="color: var(--text-secondary);">RBAC: Active</p>
+        </div>
+        <a href="{% url 'chatbots_settings_page' latest_bot.id%}">
+            <button class="btn">Edit Full Settings</button>
+        </a>
+    </div>
+
+    <!-- Context Data Summary Card -->
+    <div class="card">
+        <h2 class="card-title">Context Data Summary</h2>
+
+        <div class="metric">
+            <div class="metric-title">Active Intents</div>
+            <div class="metric-value">124</div>
+        </div>
+
+        <div class="context-preview">
+            <h3 class="metric-title">Primary Keywords</h3>
+            <div class="tag">support</div>
+            <div class="tag">pricing</div>
+            <div class="tag">account</div>
+            <div class="tag">billing</div>
+        </div>
+
+        <div class="context-preview">
+            <h3 class="metric-title">Response Variants</h3>
+            <p style="color: var(--text-secondary);">Conditional: Enabled</p>
+            <p style="color: var(--text-secondary);">Multi-language: Active</p>
+        </div>
+
+        <a href="{% url 'chatbots_settings_data_page' latest_bot.settings.context_data.id %}">
+            <button class="btn">Manage Context Data</button>
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Auto-refresh monitoring data every 1 minutes
+    setInterval(function() {
+        fetch('{% url "monitor-api" latest_bot.usage.id %}')
+            .then(response => response.json())
+            .then(data => {
+                // Update the monitoring data in the UI
+                updateMonitoringData(data);
+            })
+            .catch(error => console.error('Error:', error));
+    }, 30000);
+});
+
+
+function updateElementContentWithStyle(element, newValue, className,RemoveClassName, duration = 500) {
+    if (!element) return;
+
+    // Check if the current content is different from the new value
+    if (element.textContent !== String(newValue)) {
+        // Update the content
+        element.textContent = newValue;
+
+        // Add the class for styling
+<!--         stat-value-->
+        element.classList.remove(RemoveClassName);
+        element.classList.add(className);
+        void element.offsetWidth;
+
+
+        // Remove the class after the specified duration
+        setTimeout(() => {
+            element.classList.remove(className);
+            element.classList.add(RemoveClassName);
+        }, duration);
+    }
+}
+
+function updateMonitoringDataAndStyle(data) {
+    updateElementContentWithStyle(
+        document.querySelector('#daily-interactions'),
+        data.daily_interactions,
+        'highlight',
+        'stat-value'
+    );
+    updateElementContentWithStyle(
+        document.querySelector('#monthly-interactions'),
+        data.monthly_interactions,
+        'highlight',
+        'stat-value'
+    );
+    updateElementContentWithStyle(
+        document.querySelector('#daily-tokens'),
+        data.daily_tokens_usage,
+        'highlight',
+        'stat-value'
+    );
+    updateElementContentWithStyle(
+        document.querySelector('#monthly-tokens'),
+        data.monthly_tokens_usage,
+        'highlight',
+        'stat-value'
+    );
+}
+
+function updateMonitoringData(data) {
+//    const monitoringItems = document.querySelectorAll('.monitoring-item');
+        updateMonitoringDataAndStyle(data)
+        const timeline = document.querySelector('#last-update');
+        if (timeline) {
+            if (!data.time) {
+                timeline.textContent = 'Updated: just now';
+            } else {
+                timeline.textContent = `Updated: ${data.time}`;
+            }
+        }
+
+}
+function addTemporaryClass(element, className, duration = 500) {
+    // Ensure the element exists
+    if (!element) return;
+
+    // Add the class
+    element.classList.add(className);
+
+    // Remove the class after the specified duration
+    setTimeout(() => {
+        element.classList.remove(className);
+    }, duration);
+}
+
+// Example usage
+
+
+</script>
+<script src="{% static 'js/chatbots/dashboard-page.js' %}"></script>
+{% endblock %}
+
