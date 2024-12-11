@@ -1,0 +1,226 @@
+
+
+{% extends  'base.html' %}
+{% load chatbots_custom_filters %}
+{% load static %}
+
+{% block title %}
+AI Chatbot Monitoring
+{% endblock %}
+
+
+{% block style %}
+<link href="{% static 'css/chatbots/chatbot-usage-page.css' %}?{% now 'U' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+ <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <a href="#" class="back-link">← Back to Dashboard</a>
+                <h1>{{chatbot.name}}</h1>
+            </div>
+            {% if chatbot.status %}
+                <div class="status-badge status-active">Active</div>
+            {% else %}
+                <div class="status-badge status-inactive">Inactive</div>
+            {% endif %}
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-title">Total Interactions</div>
+
+                <div class="metric-value" id="interactions">{{ chatbot.usage.interactions|format_number}}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Daily Interactions</div>
+                <div class="metric-value " id="daily-interactions">{{chatbot.usage.daily_interactions}}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Monthly Interactions</div>
+                <div class="metric-value" id="monthly-interactions">{{chatbot.usage.monthly_interactions}}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Total Tokens Used</div>
+                <div class="metric-value" id="tokens-usage">{{chatbot.usage.tokens_usage|format_number}}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Daily Tokens Used</div>
+                <div class="metric-value " id="daily-tokens-usage">{{chatbot.usage.daily_tokens_usage|format_number}}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Monthly Tokens Used</div>
+                <div class="metric-value" id="monthly-tokens-usage">{{chatbot.usage.monthly_tokens_usage|format_number}}</div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-container">
+            <div class="chart-card">
+                <h3>Daily Interactions</h3>
+                <canvas id="interactionsChart"></canvas>
+            </div>
+<!--            <div class="chart-card">-->
+<!--                <h3>Token Usage Distribution</h3>-->
+<!--                <canvas id="tokenUsageChart"></canvas>-->
+<!--            </div>-->
+            <div class="chart-card">
+                <h3>Activity Timeline</h3>
+                <canvas id="activityTimelineChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Monitoring Table -->
+        <table class="monitoring-table">
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Daily Interactions</th>
+                    <th>Daily Tokens Used</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2024-02-15 10:30:45</td>
+                    <td>342</td>
+                    <td>24,350</td>
+                    <td>
+                        <span class="status-badge status-active">Active</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2024-02-14 15:22:11</td>
+                    <td>289</td>
+                    <td>19,845</td>
+                    <td>
+                        <span class="status-badge status-active">Active</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2024-02-13 09:45:33</td>
+                    <td>276</td>
+                    <td>18,763</td>
+                    <td>
+                        <span class="status-badge status-active">Active</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="pagination-btn">Previous</button>
+            <button class="pagination-btn">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <button class="pagination-btn">Next</button>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/chatbots/chatbot-usage-page.js' %}"></script>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+// Auto-refresh monitoring data every 1 minutes
+setInterval(function() {
+    fetch('{% url "monitor-api" chatbot.usage.id %}')
+        .then(response => response.json())
+        .then(data => {
+            // Update the monitoring data in the UI
+            updateMonitoringData(data);
+        })
+        .catch(error => console.error('Error:', error));
+}, 5000);
+});
+
+
+function updateElementContentWithStyle(element, newValue, className,RemoveClassName, duration = 500) {
+if (!element) return;
+if (element.textContent !== String(newValue)) {
+    // Update the content
+    element.textContent = newValue;
+
+    // Add the class for styling
+
+    element.classList.add(className);
+
+    // Force reflow to ensure the transition is applied correctly
+    void element.offsetWidth;
+
+    console.log('before timeout');
+
+    // Remove the class after the specified duration
+    setTimeout(() => {
+        console.log('inside timeout');
+
+        // Safely remove and toggle the classes
+        element.classList.remove(className);   // Remove the highlight class
+
+        console.log('pass');
+    }, duration); // `duration` is how long the animation lasts
+}
+}
+function updateMonitoringDataAndStyle(data) {
+    updateElementContentWithStyle(
+        document.querySelector('#interactions'),
+        data.interactions,
+        'high-usage',
+         'metric-value'
+    );
+    updateElementContentWithStyle(
+        document.querySelector('#daily-interactions'),
+        data.daily_interactions,
+        'high-usage',
+         'metric-value'
+    );
+    updateElementContentWithStyle(
+        document.querySelector('#monthly-interactions'),
+        data.monthly_interactions,
+        'high-usage',
+         'metric-value'
+    );
+    updateElementContentWithStyle(
+        document.querySelector('#tokens-usage'),
+        data.tokens_usage,
+        'high-usage',
+         'metric-value'
+    );
+    updateElementContentWithStyle(
+        document.querySelector('#daily-tokens-usage'),
+        data.daily_tokens_usage,
+        'high-usage',
+         'metric-value'
+    );
+    updateElementContentWithStyle(
+        document.querySelector('#monthly-tokens-usage'),
+        data.monthly_tokens_usage,
+        'high-usage',
+         'metric-value'
+    );
+}
+
+function updateMonitoringData(data) {
+//    const monitoringItems = document.querySelectorAll('.monitoring-item');
+        updateMonitoringDataAndStyle(data)
+        const timeline = document.querySelector('#last-update');
+        if (timeline) {
+            if (!data.time) {
+                timeline.textContent = 'Updated: just now';
+            } else {
+                timeline.textContent = `Updated: ${data.time}`;
+            }
+        }
+
+}
+</script>
+{% endblock %}
+
