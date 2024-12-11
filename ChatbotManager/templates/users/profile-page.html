@@ -1,0 +1,222 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block title %}
+Account
+{% endblock %}
+
+
+{% block style %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="{% static 'css/users/profile-page.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <!-- Profile Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Profile & Account Information</h2>
+            <div class="row">
+                <button class="button button-secondary">Edit Profile</button>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="button button-secondary">Logout</button>
+                </form>
+            </div>
+        </div>
+        <div class="profile-section">
+            <div class="profile-avatar">
+                <i class="fas fa-user fa-3x" style="color: var(--text-secondary)"></i>
+                <div class="avatar-upload">
+                    <i class="fas fa-camera" style="color: var(--text-white)"></i>
+                </div>
+            </div>
+            <div class="profile-info">
+                <div class="info-group">
+                    <span class="info-label">Full Name</span>
+                    <div class="info-value">
+                        {{request.user.username}}
+                        <i class="fas fa-pen" style="color: var(--electric-blue); cursor: pointer;"></i>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Email Address</span>
+                    <div class="info-value">
+                        {{request.user.email}}
+                        <i class="fas fa-pen" style="color: var(--electric-blue); cursor: pointer;"></i>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Password</span>
+                    <div class="info-value">
+                        ••••••••••••
+                        <button class="button button-secondary">Change Password</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscription Section -->
+    {% if user.subscription %}
+
+
+
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Current Subscription</h2>
+            <div class="row">
+                <form action="{% url 'cancel-sub' user.subscription.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="button button-secondary">Cancel Subscription</button>
+
+                </form>
+
+
+                 <button class="button button-primary">Upgrade Plan</button>
+            </div>
+
+        </div>
+        <div class="subscription-details">
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-name">{{user.subscription.plan.plan_name}}</div>
+                    <div class="plan-price">${{user.subscription.plan.price}}/month</div>
+                </div>
+                <div class="renewal-info">
+                    Next billing date: {{user.subscription.end_date}}
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div class="info-group">
+                    <span class="info-label">Billing Cycle</span>
+                    <div class="info-value">Monthly</div>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Payment Method</span>
+                    <div class="info-value">
+                        •••• •••• •••• 4242
+                        <i class="fab fa-cc-visa" style="color: var(--electric-blue)"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ {% endif %}
+    <!-- Usage Statistics -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Usage Statistics</h2>
+            <button class="button button-secondary">Export Data</button>
+        </div>
+        <div class="usage-stats">
+            <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Monthly Usage (32/50 interactions)</span>
+                    <span>65%</span>
+                </div>
+                <div class="usage-bar">
+                    <div class="usage-progress"></div>
+                </div>
+            </div>
+            <table class="usage-table">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Oct 28, 2024</td>
+                    <td>Chat Session</td>
+                    <td>5m 32s</td>
+                    <td><span style="color: var(--lime-green)">Completed</span></td>
+                </tr>
+                <tr>
+                    <td>Oct 27, 2024</td>
+                    <td>Query Analysis</td>
+                    <td>2m 15s</td>
+                    <td><span style="color: var(--lime-green)">Completed</span></td>
+                </tr>
+                <tr>
+                    <td>Oct 27, 2024</td>
+                    <td>Chat Session</td>
+                    <td>3m 45s</td>
+                    <td><span style="color: var(--lime-green)">Completed</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Notification Settings -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Notification Settings</h2>
+        </div>
+        <div style="display: grid; gap: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 style="color: var(--text-white)">Usage Alerts</h3>
+                    <p style="color: var(--text-secondary)">Receive notifications when approaching usage limits</p>
+                </div>
+                <label class="toggle-switch">
+                    <input checked type="checkbox">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 style="color: var(--text-white)">Billing Reminders</h3>
+                    <p style="color: var(--text-secondary)">Get notified before subscription renewal</p>
+                </div>
+                <label class="toggle-switch">
+                    <input checked type="checkbox">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div style="display: grid; gap: 1rem;">
+                <h3 style="color: var(--text-white)">Recent Notifications</h3>
+                <div class="notification-item">
+                    <div class="notification-content">
+                        <div class="notification-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="notification-text">
+                            Your subscription will renew on November 28, 2024.
+                        </div>
+                    </div>
+                    <div class="notification-time">
+                        2 days ago
+                    </div>
+                </div>
+                <div class="notification-item">
+                    <div class="notification-content">
+                        <div class="notification-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="notification-text">
+                            You are at 65% of your monthly usage limit. Upgrade your plan to avoid overage fees.
+                        </div>
+                    </div>
+                    <div class="notification-time">
+                        1 week ago
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+
+{% block script %}
+
+{% endblock %}
