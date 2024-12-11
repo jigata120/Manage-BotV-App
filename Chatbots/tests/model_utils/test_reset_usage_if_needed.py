@@ -24,20 +24,18 @@ class ResetUsageTestCase(TestCase):
 
     @patch("Chatbots.model_utils.timezone.now")
     def test_reset_usage_if_needed(self, mock_now):
-        mock_now.return_value = make_aware(datetime(2024, 12, 10, 12, 0))
+        mock_now.return_value = make_aware(datetime(2024, 12, 11, 12, 0))
         reset_applied = reset_usage_if_needed()
 
         self.assertTrue(reset_applied)
 
-        # Refresh the objects to see updates
         self.usage_1.refresh_from_db()
         self.usage_2.refresh_from_db()
+
+        self.assertEqual(self.usage_1.monthly_interactions, 100)
+        self.assertEqual(self.usage_2.monthly_interactions, 50)
 
         self.assertEqual(self.usage_1.daily_interactions, 0)
         self.assertEqual(self.usage_1.daily_tokens_usage, 0)
         self.assertEqual(self.usage_2.daily_interactions, 0)
         self.assertEqual(self.usage_2.daily_tokens_usage, 0)
-
-        # Monthly values remain unchanged unless it's the first of the month
-        self.assertEqual(self.usage_1.monthly_interactions, 100)
-        self.assertEqual(self.usage_2.monthly_interactions, 50)

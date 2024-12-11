@@ -1,2 +1,5 @@
 vevn
 __pycache__/
+staticfiles
+.env
+Configs.md

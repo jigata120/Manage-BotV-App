@@ -15,7 +15,9 @@ class Subscription(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.plan.plan_name} Subscription for {self.user.username}"
+        if self.user:
+            return f"{self.plan.plan_name} Subscription for {self.user.username}"
+        return f"{self.plan.plan_name} Subscription (No user assigned)"
 
 
 class Plan(models.Model):

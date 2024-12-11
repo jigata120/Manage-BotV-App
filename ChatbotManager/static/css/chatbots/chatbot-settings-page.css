@@ -17,7 +17,12 @@
             font-family: 'Inter', sans-serif;
         }
 
-
+        #generalSettings div{
+        margin-top:0.5rem;
+        }
+        #generalSettings button{
+        margin-top:1.5rem;
+        }
 
         .container {
             max-width: 1200px;

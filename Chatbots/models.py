@@ -12,13 +12,13 @@ class Chatbot(models.Model):
     image = models.URLField( blank=True, null=True)
     apikey = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     status = models.BooleanField(default=True)
-    description = models.TextField()
+    description = models.TextField(max_length=1000)
     user = models.ForeignKey('Users.Profile', on_delete=models.CASCADE, related_name='rel_chatbots')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    settings = models.OneToOneField('Settings', on_delete=models.SET_NULL, related_name='rel_chatbot_settings',
+    settings = models.OneToOneField('Settings', on_delete=models.CASCADE, related_name='rel_chatbot_settings',
                                     null=True,blank=True)
-    usage = models.OneToOneField('Usage', on_delete=models.SET_NULL, related_name='rel_chatbot_usage',
+    usage = models.OneToOneField('Usage', on_delete=models.CASCADE, related_name='rel_chatbot_usage',
                                     null = True, blank = True)
 
     def __str__(self):
@@ -36,10 +36,16 @@ class Usage(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def update_usage(self, interactions=None, tokens=None):
+        print('---------------------------------------------------------------')
         if interactions:
             self.interactions += interactions
+            self.daily_interactions += interactions
+            self.monthly_interactions += interactions
         elif tokens:
             self.tokens_usage += tokens
+            self.daily_tokens_usage += tokens
+            self.monthly_tokens_usage += tokens
+            print('__________________________________________________________________________________________-'+str(tokens))
         if is_day_gone(self.updated_at) or is_month_gone(self.updated_at):
             reset_usage_if_needed()
         else:
@@ -62,7 +68,7 @@ class Settings(models.Model):
     chatbot = models.OneToOneField(Chatbot, on_delete=models.CASCADE, related_name='rel_settings',
                                    blank=True, null=True)
     context_length = models.PositiveIntegerField(default=500)
-    context_data = models.OneToOneField(ContextData, on_delete=models.SET_NULL, related_name='rel_context_data_settings',
+    context_data = models.OneToOneField(ContextData, on_delete=models.CASCADE, related_name='rel_context_data_settings',
                                         blank=True,null=True)
     output_length = models.PositiveIntegerField(default=50)
     limit_summary = models.PositiveIntegerField(default=1000)
@@ -80,6 +86,7 @@ class Settings(models.Model):
         help_text="Personality style of the bot"
     )
     rate_limit = models.IntegerField(default=60, help_text="Maximum requests allowed per minute")
+    default_greeting= models.CharField(max_length=200,default='Hello! How can I help you today?')
 
     def __str__(self):
         if self.chatbot:
@@ -100,3 +107,9 @@ class ChatbotSession(models.Model):
 
     def __str__(self):
         return f"ChatbotSession(id={self.id})"
+
+class AllowedHost(models.Model):
+    domain = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.domain
